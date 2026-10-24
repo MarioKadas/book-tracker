@@ -1,0 +1,104 @@
+:root {
+  --bg: #eef0f3;
+  --surface: #ffffff;
+  --ink: #1b2433;
+  --muted: #5b6578;
+  --line: #d3d8e0;
+  --accent: #1f3a5f;
+  --accent-ink: #ffffff;
+  --star: #d89a1d;
+  --tbr: #6b7a99;
+  --reading: #c8762b;
+  --done: #2f7d5b;
+  --err: #b3261e;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d;
+    --surface: #1b212b;
+    --ink: #e8ebf0;
+    --muted: #9aa4b6;
+    --line: #2f3846;
+    --accent: #8fb3e8;
+    --accent-ink: #10151c;
+    --star: #f0b43c;
+    --tbr: #8a99b8;
+    --reading: #e39550;
+    --done: #55b88a;
+    --err: #ff8a80;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  line-height: 1.5;
+}
+.app { max-width: 880px; margin: 0 auto; padding: 40px 20px 64px; }
+.top h1 { font-family: "Young Serif", Georgia, serif; font-weight: 400; font-size: 2.6rem; margin: 0; letter-spacing: -0.01em; }
+.top p { margin: 4px 0 28px; color: var(--muted); }
+
+button, input, select { font: inherit; color: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.add {
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px;
+}
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 130px; }
+.field.grow { flex: 1 1 200px; }
+.field > span { font-size: 0.85rem; color: var(--muted); }
+input, select {
+  background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; min-height: 40px;
+}
+.primary {
+  background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px;
+  padding: 0 20px; min-height: 40px; font-weight: 600; cursor: pointer;
+}
+.primary:hover { filter: brightness(1.1); }
+
+.stars { display: flex; min-height: 40px; align-items: center; }
+.star { background: none; border: 0; padding: 0 2px; font-size: 1.4rem; line-height: 1; color: var(--line); cursor: pointer; }
+.star.on { color: var(--star); }
+.star:hover { color: var(--star); }
+
+.bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin: 28px 0 12px; }
+.tabs, .io { display: flex; flex-wrap: wrap; gap: 6px; }
+.tab, .io button, .ghost {
+  background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer;
+}
+.tab small { color: var(--muted); margin-left: 2px; }
+.tab.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tab.active small { color: inherit; opacity: 0.7; }
+.io button:hover:not(:disabled), .ghost:hover { border-color: var(--accent); }
+.io button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.note { margin: 0 0 12px; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
+.note.error { color: var(--err); border-color: var(--err); }
+.note.ok { border-color: var(--done); }
+
+.shelf { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.book {
+  display: grid; grid-template-columns: 1fr auto auto auto; gap: 14px; align-items: center;
+  background: var(--surface); border: 1px solid var(--line); border-left: 8px solid var(--tbr);
+  border-radius: 6px 10px 10px 6px; padding: 12px 16px;
+}
+.book.reading { border-left-color: var(--reading); }
+.book.completed { border-left-color: var(--done); }
+.info { min-width: 0; }
+.info h2 { font-family: "Young Serif", Georgia, serif; font-weight: 400; font-size: 1.15rem; margin: 0; overflow-wrap: anywhere; }
+.info p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.ghost { color: var(--muted); padding: 6px 12px; }
+.empty { color: var(--muted); text-align: center; padding: 48px 0; }
+
+@media (max-width: 640px) {
+  .book { grid-template-columns: 1fr auto; }
+  .book .info { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .primary, .tab, .io button, .ghost { transition: filter 0.15s, border-color 0.15s; }
+}
